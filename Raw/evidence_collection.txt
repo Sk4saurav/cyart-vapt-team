@@ -1,0 +1,10 @@
+# Evidence Collection & Hashing
+# User: Root
+# File: /etc/shadow
+
+whoami
+root
+id
+uid=0(root) gid=0(root)
+sha256sum /etc/shadow
+7f9f08e29620f196a409890a742738c61644f67a1f8e879db8317b674b16c762  /etc/shadow

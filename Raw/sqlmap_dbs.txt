@@ -1,0 +1,17 @@
+# SQLMap Database Enumeration
+# Command: sqlmap -u "..." --dbs
+
+[11:13:21] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu 8.04 (Hardy Heron)
+web application technology: Apache 2.2.8, PHP 5.2.4
+back-end DBMS: MySQL >= 4.1
+
+[11:13:22] [INFO] fetching database names
+available databases [7]:
+[*] dvwa
+[*] information_schema
+[*] metasploit
+[*] mysql
+[*] owasp10
+[*] tikiwiki
+[*] tikiwiki195
