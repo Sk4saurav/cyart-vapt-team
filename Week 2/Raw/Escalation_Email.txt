@@ -1,0 +1,19 @@
+Subject: CRITICAL ACTION REQUIRED: Security Vulnerabilities Detected on Host 192.168.56.105(Metasploitable2)
+
+To: Development Team
+Cc: IT Security Manager
+
+Dear Team,
+
+I am writing to formally escalate critical security findings discovered during our recent vulnerability assessment of host 192.168.56.105.
+
+Our scan identified that this server is currently exposing a root-level shell on Port 1524 and running a compromised version of FTP (vsftpd 2.3.4). These vulnerabilities allow unauthenticated attackers to execute arbitrary commands with administrative privileges. Additionally, the phpMyAdmin interface is publicly accessible, presenting a severe risk of data exfiltration.
+
+Proof of Concept: We verified this access by running nmap -sV -p 21,1524 192.168.56.105, which established a connection without requiring a password.
+
+Please isolate this host from the network immediately and refer to the attached technical report for the required patch details.
+
+Best regards,
+
+Saurav Kumar
+Security Analyst
