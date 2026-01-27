@@ -1,110 +1,106 @@
-# Week 4 Cybersecurity Lab Reports & Capstone Project
+# Cybersecurity Lab Reports & Capstone Project
 
-## 📄 Overview
-[cite_start]This document compiles a series of advanced cybersecurity lab reports and a final Capstone project conducted by CYART[cite: 1]. [cite_start]The reports cover various domains including web application exploitation, API security, privilege escalation, network protocol attacks, and mobile application testing[cite: 5, 329, 610, 703, 769, 824].
+## 📄 Project Overview
+This repository contains the complete documentation for the Week 4 Advanced Cybersecurity Engagement conducted by **CYART**. The project encompasses a series of penetration tests, vulnerability assessments, and a final Capstone engagement, demonstrating proficiency in web exploitation, API security, privilege escalation, network attacks, and mobile application testing.
+
+* **Organization:** CYART
+* **Website:** www.cyart.io
+* **Contact:** inquiry@cyart.io
 
 ---
 
 ## 🛠️ Table of Contents
-
-1.  [Advanced Exploitation Lab (Mr. Robot VM)](#1-advanced-exploitation-lab-mr-robot-vm)
-2.  [API Security Testing Lab (DVWA)](#2-api-security-testing-lab-dvwa)
-3.  [Privilege Escalation and Persistence Lab](#3-privilege-escalation-and-persistence-lab)
-4.  [Network Protocol Attacks Lab](#4-network-protocol-attacks-lab)
-5.  [Mobile Application Testing Lab](#5-mobile-application-testing-lab)
+1.  [Advanced Exploitation Lab (Mr. Robot)](#1-advanced-exploitation-lab-mr-robot)
+2.  [API Security Testing (DVWA)](#2-api-security-testing-dvwa)
+3.  [Privilege Escalation & Persistence](#3-privilege-escalation--persistence)
+4.  [Network Protocol Attacks](#4-network-protocol-attacks)
+5.  [Mobile Application Testing](#5-mobile-application-testing)
 6.  [Capstone Project: Full VAPT Engagement](#6-capstone-project-full-vapt-engagement)
 
 ---
 
-## 1. Advanced Exploitation Lab (Mr. Robot VM)
-[cite_start]**Target:** 192.168.87.53 [cite: 5]
-[cite_start]**Date:** January 23, 2026 [cite: 5]
+## 1. Advanced Exploitation Lab (Mr. Robot)
+* **Target:** Mr. Robot VM (`192.168.87.53`)
+* **Date:** January 23, 2026
+* **Tools:** Hydra, Metasploit Framework
 
-### Summary
-[cite_start]A comprehensive penetration test identifying critical vulnerabilities in the WordPress CMS[cite: 7, 8]. [cite_start]The attack chain involved credential enumeration and shell upload to achieve Remote Code Execution (RCE)[cite: 9].
+### Engagement Summary
+A black-box penetration test targeting a vulnerable WordPress instance. The assessment successfully chained a brute-force attack with an arbitrary file upload vulnerability to achieve Remote Code Execution (RCE).
 
 ### Key Findings
-* [cite_start]**Credential Access:** Brute-forced WordPress administrative credentials (`elliot` / `ER28-0652`)[cite: 14].
-* [cite_start]**RCE:** Uploaded a malicious PHP payload via the WordPress plugin manager using Metasploit (`exploit/unix/webapp/wp_admin_shell_upload`)[cite: 151].
-* [cite_start]**Privilege Escalation:** Exploited a SUID misconfiguration in the `nmap` binary to escalate privileges from `daemon` to `root`[cite: 251, 252].
+* **Credential Access:** Successfully recovered administrative credentials (`elliot` / `ER28-0652`) using a dictionary attack.
+* **Remote Code Execution:** Exploited the `wp_admin_shell_upload` vulnerability to upload a malicious PHP payload, establishing a reverse TCP connection.
+* **Outcome:** Gained initial shell access as the `daemon` user.
 
 ---
 
-## 2. API Security Testing Lab (DVWA)
-[cite_start]**Target:** DVWA (Simulated API Endpoints) & Postman Local [cite: 330]
-[cite_start]**Date:** January 26, 2026 [cite: 330]
+## 2. API Security Testing (DVWA)
+* **Target:** DVWA (Simulated API Endpoints)
+* **Date:** January 26, 2026
+* **Tools:** Burp Suite Professional, Postman, Gobuster
 
-### Summary
-[cite_start]Security testing evaluated resilience against OWASP API Top 10 vulnerabilities[cite: 332]. [cite_start]Critical flaws were found in object-level authorization and schema exposure[cite: 333, 334].
+### Engagement Summary
+Security testing focused on the OWASP API Top 10. The assessment revealed critical flaws in authorization mechanisms while verifying the robustness of session management.
 
 ### Key Findings
-* [cite_start]**Broken Object Level Authorization (BOLA):** Exploited an ID parameter to access unauthorized user profiles (e.g., accessing User ID 2 "Gordon Brown" as User ID 1)[cite: 445, 447].
-* [cite_start]**GraphQL Introspection:** Identified potential schema exposure through introspection queries[cite: 334, 519].
-* [cite_start]**Token Manipulation:** Session management was found to be secure; token tampering attempts were redirected to the login page[cite: 335, 549].
+* **Broken Object Level Authorization (BOLA):** Exploited an IDOR vulnerability to access unauthorized user profiles (e.g., "Gordon Brown") by manipulating the User ID parameter.
+* **GraphQL Introspection:** Identified a potential information leak where the API schema could be mapped using introspection queries.
+* **Token Security:** Validated that the application correctly rejects tampered session tokens, redirecting unauthorized requests to the login page.
 
 ---
 
-## 3. Privilege Escalation and Persistence Lab
-[cite_start]**Target:** 192.168.87.53 [cite: 611]
-[cite_start]**Date:** January 27, 2026 [cite: 611]
+## 3. Privilege Escalation & Persistence
+* **Target:** Mr. Robot VM (`192.168.87.53`)
+* **Date:** January 27, 2026
+* **Tools:** LinPEAS, Nmap (SUID), Cron
 
-### Summary
-[cite_start]Focusing on post-exploitation, this lab utilized LinPEAS for enumeration and established persistence after gaining root access[cite: 616, 619].
+### Engagement Summary
+Following the initial compromise, this phase focused on vertical privilege escalation and maintaining long-term access to the target system.
 
 ### Key Findings
-* [cite_start]**Enumeration:** LinPEAS identified `/usr/local/bin/nmap` with SUID permissions[cite: 625].
-* [cite_start]**Exploitation:** Used Nmap's "Interactive Mode" to spawn a root shell (`!sh`)[cite: 680].
-* [cite_start]**Persistence:** Created a hidden script (`.backdoor.sh`) and configured a system-wide cron job to execute a reverse shell every minute[cite: 699, 700].
+* **Root Compromise:** Exploited a misconfigured SUID binary (`/usr/local/bin/nmap`) using "Interactive Mode" to spawn a root shell (`!sh`).
+* **Persistence:** Established a mechanism to regain access by creating a hidden script (`.backdoor.sh`) and scheduling a system-wide Cron job to execute a reverse shell every minute.
 
 ---
 
-## 4. Network Protocol Attacks Lab
-[cite_start]**Target:** 192.168.87.149 (Metasploitable 2) [cite: 705]
-[cite_start]**Date:** January 27, 2026 [cite: 705]
+## 4. Network Protocol Attacks
+* **Target:** Metasploitable 2 (`192.168.87.149`)
+* **Date:** January 27, 2026
+* **Tools:** Responder, Telnet, Wget
 
-### Summary
-[cite_start]Assessment of local network protocols to identify flaws in name resolution services[cite: 707].
+### Engagement Summary
+An assessment of local network protocols to identify and exploit flaws in name resolution services (LLMNR/NBT-NS).
 
 ### Key Findings
-* [cite_start]**LLMNR/NBT-NS Poisoning:** Successfully used **Responder** to intercept broadcast requests[cite: 708].
-* [cite_start]**Traffic Interception:** Spoofed the identity of a trusted network resource, redirecting the victim to the attacker machine[cite: 708, 723].
+* **LLMNR Poisoning:** Successfully configured **Responder** to intercept broadcast name resolution requests.
+* **Credential Capture:** Spoofed a trusted network resource, poisoning the target's traffic and redirecting it to the attacker machine for potential credential harvesting.
 
 ---
 
-## 5. Mobile Application Testing Lab
-[cite_start]**Target:** `test.apk` (Beta Build) [cite: 770]
-[cite_start]**Date:** January 27, 2026 [cite: 770]
+## 5. Mobile Application Testing
+* **Target:** `test.apk` (Beta Build)
+* **Date:** January 27, 2026
+* **Tools:** MobSF, Frida, Drozer
 
-### Summary
-[cite_start]A hybrid assessment using Static Analysis (MobSF) and Dynamic Instrumentation (Frida)[cite: 773].
+### Engagement Summary
+A hybrid security assessment of an Android application, combining static analysis of the source code with dynamic runtime manipulation.
 
 ### Key Findings
-* [cite_start]**Static Analysis:** Identified high-severity vulnerabilities including "Insecure Data Storage" (plain text credentials in `SharedPreferences.xml`) and hardcoded API keys[cite: 779, 784].
-* [cite_start]**Authentication Bypass:** Used a Frida script to hook the `checkPin()` function, forcing it to return `true` and bypass the login screen[cite: 795, 811].
-* [cite_start]**IPC Analysis:** Drozer revealed exported activities (e.g., `PostLoginAdminActivity`) that could be launched directly to skip authentication[cite: 823].
+* **Insecure Data Storage:** Static analysis (MobSF) revealed sensitive credentials stored in plain text within `SharedPreferences.xml`.
+* **Authentication Bypass:** Used **Frida** to hook the `checkPin()` function at runtime, forcing it to return `true` and successfully bypassing the login screen.
+* **Exported Activities:** **Drozer** identified exposed application components (e.g., `PostLoginAdminActivity`) that allowed direct access to privileged areas without authentication.
 
 ---
 
 ## 6. Capstone Project: Full VAPT Engagement
-[cite_start]**Target:** HackTheBox "Lame" (10.10.10.3) [cite: 825]
-[cite_start]**Date:** January 27, 2026 [cite: 825]
+* **Target:** HackTheBox "Lame" (`10.10.10.3`)
+* **Date:** January 27, 2026
+* **Tools:** Nmap, Metasploit, Searchsploit
 
-### Summary
-[cite_start]A simulated full penetration test against a legacy server[cite: 830]. [cite_start]The primary breach exploited a critical RCE vulnerability in the file-sharing service[cite: 832].
+### Engagement Summary
+A full-lifecycle penetration test against a legacy Linux server. The engagement followed the PTES standard, moving from reconnaissance to root-level compromise.
 
-### Attack Timeline
-1.  [cite_start]**Reconnaissance:** Nmap scan identified `vsftpd 2.3.4` and `Samba 3.0.20` on ports 21 and 445[cite: 837].
-2.  [cite_start]**Vulnerability Analysis:** Identified `Samba 3.0.20` as vulnerable to the "Username Map Script" exploit (CVE-2007-2447)[cite: 879, 880].
-3.  [cite_start]**Exploitation:** Executed `exploit/multi/samba/usermap_script` via Metasploit to gain a reverse shell[cite: 899, 908].
-4.  [cite_start]**Post-Exploitation:** Confirmed `root` access (`uid=0`) and exfiltrated user and root flags[cite: 936, 938, 939].
-
-### Remediation
-* [cite_start]Upgrade Samba to a supported version (4.x+)[cite: 1002].
-* [cite_start]Disable unused services like `distccd`[cite: 1004].
-* [cite_start]Restrict SMB traffic (Port 445) to trusted internal subnets[cite: 1006].
-
----
-
-## 📞 Contact Information
-* [cite_start]**Email:** inquiry@cyart.io [cite: 2]
-* [cite_start]**Website:** www.cyart.io [cite: 3]
+### Key Findings
+* **Reconnaissance:** Identified `vsftpd 2.3.4` (Port 21) and `Samba 3.0.20` (Port 445) as high-value targets.
+* **Exploitation:** Exploited the critical **Samba "Username Map Script" vulnerability (CVE-2007-2447)** using Metasploit to achieve Remote Code Execution.
+* **Post-Exploitation:** Confirmed `root` access (`uid=0`) and successfully exfiltrated both the user and root flags as proof of compromise.
